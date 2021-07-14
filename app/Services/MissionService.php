@@ -6,7 +6,6 @@ namespace App\Services;
 
 use App\Repositories\Eloquent\MissionRepository;
 use Illuminate\Support\Facades\Validator;
-use InvalidArgumentException;
 class MissionService
 {
     protected $missionRepository;

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Services\CapsuleService;
-use Illuminate\Http\Request;
 use Exception;
 
 class CapsuleController extends Controller

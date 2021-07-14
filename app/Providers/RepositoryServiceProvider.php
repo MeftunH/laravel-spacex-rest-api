@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Repositories\CapsuleRepositoryInterface;
+use App\Repositories\MissionRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -15,6 +16,7 @@ class RepositoryServiceProvider extends ServiceProvider
     public function register()
     {
        $this->app->bind(CapsuleRepositoryInterface::class);
+       $this->app->bind(MissionRepositoryInterface::class);
     }
 
     /**
