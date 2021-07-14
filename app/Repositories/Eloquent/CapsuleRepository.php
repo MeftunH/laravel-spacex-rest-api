@@ -2,17 +2,22 @@
 
 
 namespace App\Repositories\Eloquent;
+
+use App\Events\syncStartedEvent;
 use App\Models\Capsule;
 use App\Repositories\CapsuleRepositoryInterface;
 use App\Services\MissionService;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\DB;
+use PHPUnit\TextUI\Exception;
 
 
 class CapsuleRepository extends BaseRepository implements CapsuleRepositoryInterface
 {
     protected $capsule;
     protected $missionService;
-    public function __construct(Capsule $model,Capsule $capsule,MissionService $missionService)
+
+    public function __construct(Capsule $model, Capsule $capsule, MissionService $missionService)
     {
         $this->capsule = $capsule;
         $this->missionService = $missionService;
@@ -21,6 +26,7 @@ class CapsuleRepository extends BaseRepository implements CapsuleRepositoryInter
 
     public function save($data)
     {
+
         $capsule = new $this->capsule;
         $capsule->capsule_serial = $data['capsule_serial'];
         $capsule->capsule_id = $data['capsule_id'];
@@ -33,23 +39,32 @@ class CapsuleRepository extends BaseRepository implements CapsuleRepositoryInter
         $capsule->reuse_count = $data['reuse_count'];
         $capsule->save();
         return $capsule->fresh();
+
     }
+
     public function getAllCapsules()
     {
-        $client = new client();
+        event(new syncStartedEvent());
+        try {
+            DB::transaction(function () {
+                $client = new client();
 
-        $request = $client->get('https://api.spacexdata.com/v3/capsules');
-        $decoded_data = json_decode($request->getBody(), true, 512, JSON_THROW_ON_ERROR);
+                $request = $client->get('https://api.spacexdata.com/v3/capsules');
+                $decoded_data = json_decode($request->getBody(), true, 512, JSON_THROW_ON_ERROR);
 
-        foreach ($decoded_data as $key => $val) {
+                foreach ($decoded_data as $key => $val) {
 
-            $created_obj =$this->save($val);
-            if (is_array($val)) {
+                    $created_obj = $this->save($val);
+                    if (is_array($val)) {
 
-                foreach ($val['missions'] as $item) {
-                    $this->missionService->saveMissionData($item,$created_obj->id);
+                        foreach ($val['missions'] as $item) {
+                            $this->missionService->saveMissionData($item, $created_obj->id);
+                        }
+                    }
                 }
-            }
+            });
+        } catch (Exception $exception) {
+            return $exception->getMessage();
         }
     }
 

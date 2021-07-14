@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\syncStartedEvent;
+use App\Listeners\syncStartedListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -15,9 +17,10 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        Registered::class => [
-            SendEmailVerificationNotification::class,
-        ],
+        syncStartedEvent::class =>
+            [
+                syncStartedListener::class,
+            ],
     ];
 
     /**
