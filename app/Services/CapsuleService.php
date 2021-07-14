@@ -16,6 +16,10 @@ class CapsuleService
         $this->capsuleRepository = $capsuleRepository;
     }
 
+    public function capsuleDetail($capsule_serial)
+    {
+        return $this->capsuleRepository->capsuleDetail($capsule_serial);
+    }
     public function saveCapsuleData($data)
     {
         $validate = Validator::make($data,[
@@ -33,6 +37,10 @@ class CapsuleService
         return $this->capsuleRepository->save($data);
     }
 
+    public function listAll()
+    {
+        return $this->capsuleRepository->listAllCapsules();
+    }
     public function getAll()
     {
         return $this->capsuleRepository->getAllCapsules();

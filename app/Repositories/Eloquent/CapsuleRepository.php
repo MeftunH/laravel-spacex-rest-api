@@ -18,13 +18,25 @@ class CapsuleRepository extends BaseRepository implements CapsuleRepositoryInter
     protected $capsule;
     protected $missionService;
 
-    public function __construct(Capsule $model, Capsule $capsule, MissionService $missionService)
+    public function __construct(Capsule $capsule, MissionService $missionService)
     {
         $this->capsule = $capsule;
         $this->missionService = $missionService;
-        parent::__construct($model);
+        parent::__construct($capsule);
     }
 
+    public function capsuleDetail($capsule_serial)
+    {
+        return $this->capsule->with('missions')->where('capsule_serial',$capsule_serial)->get();
+    }
+    public function listAllCapsules()
+    {
+        $capsules = $this->capsule->with('missions');
+        if (request()->has('status')) {
+            $capsules->where('status', request('status'));
+        }
+        return $capsules->get();
+    }
     public function save($data)
     {
 
