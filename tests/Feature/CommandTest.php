@@ -16,7 +16,7 @@ class CommandTest extends TestCase
      */
     public function test_command()
     {
-        $this->artisan('sync:ToDatabase')->expectsConfirmation('Command Worked')
-            ->assertExitCode(1);
+        $this->artisan('sync:ToDatabase')->expectsOutput('Command Worked')
+            ->assertExitCode(0);
     }
 }
