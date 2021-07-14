@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Services\CapsuleService;
 use Illuminate\Console\Command;
 
 class syncToDatabase extends Command
@@ -11,22 +12,24 @@ class syncToDatabase extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'sync:ToDatabase';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'get all data from SpaceX API and sync them into the database';
 
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct()
+    protected $capsuleService;
+    public function __construct(CapsuleService $capsuleService)
     {
+        $this->capsuleService = $capsuleService;
         parent::__construct();
     }
 
@@ -37,6 +40,7 @@ class syncToDatabase extends Command
      */
     public function handle()
     {
-        return 0;
+        $this->capsuleService->getAll();
+        $this->line('Command Worked');
     }
 }
