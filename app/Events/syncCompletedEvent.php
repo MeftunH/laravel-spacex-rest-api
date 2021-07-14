@@ -19,9 +19,11 @@ class syncCompletedEvent
      *
      * @return void
      */
-    public function __construct()
+    public $context;
+    public function __construct($context)
     {
-        //
+        $string = ($context);
+        $this->context = $string;
     }
 
     /**

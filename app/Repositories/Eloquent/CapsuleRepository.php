@@ -3,6 +3,7 @@
 
 namespace App\Repositories\Eloquent;
 
+use App\Events\syncCompletedEvent;
 use App\Events\syncStartedEvent;
 use App\Models\Capsule;
 use App\Repositories\CapsuleRepositoryInterface;
@@ -62,6 +63,7 @@ class CapsuleRepository extends BaseRepository implements CapsuleRepositoryInter
                         }
                     }
                 }
+                event(new syncCompletedEvent($decoded_data));
             });
         } catch (Exception $exception) {
             return $exception->getMessage();
