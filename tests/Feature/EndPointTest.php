@@ -14,6 +14,16 @@ class EndPointTest extends TestCase
      *
      * @return void
      */
+    public function test_can_login() {
+
+        $body = [
+            'email' => 'swagger@gmail.com',
+            'password' => 'swagger@gmail.com'
+        ];
+        $this->json('POST','/api/login',$body,['Accept' => 'application/json'])
+            ->assertStatus(200)
+            ->assertJsonStructure(['success'=>['token','user'=>['id','name','email','email_verified_at','created_at','updated_at']]]);
+    }
 
     public function test_list_capsules(): void
     {
@@ -33,6 +43,7 @@ class EndPointTest extends TestCase
                 'status' => $capsule->status,
             ]);
     }
+
     public function test_capsule_detail()
     {
         $this->withoutMiddleware();
