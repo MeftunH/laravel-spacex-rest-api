@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\CapsuleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -15,8 +16,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('register', [AuthController::class,'register']);
+Route::post('login', [AuthController::class,'login']);
+Route::group([
+    'middleware' => ['auth:api']
+], function () {
+    Route::get('capsules', [CapsuleController::class, 'listCapsules'])->name('listCapsules');
+    Route::get('/users', [AuthController::class, 'allUsers'])->name('allUsers');
+    Route::get('capsules/{capsule_serial}', [CapsuleController::class, 'capsuleDetail'])->name('capsuleDetail');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
 });
-Route::get('capsules', [CapsuleController::class, 'listCapsules'])->name('listCapsules');
-Route::get('capsules/{capsule_serial}', [CapsuleController::class, 'capsuleDetail'])->name('capsuleDetail');
