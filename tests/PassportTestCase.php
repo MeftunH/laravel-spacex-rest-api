@@ -22,7 +22,7 @@ abstract class PassportTestCase  extends TestCase
         parent::setUp();
         $clientRepository = new ClientRepository();
         $client = $clientRepository->createPersonalAccessClient(
-            null, 'Test Personal Access Client', $this->baseUrl
+            null, 'Test Personal Access Client',env('APP_URL')
         );
 
         DB::table('oauth_personal_access_clients')->insert([
