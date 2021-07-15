@@ -22,6 +22,8 @@ Route::group([
     'middleware' => ['auth:api']
 ], function () {
     Route::get('capsules', [CapsuleController::class, 'listCapsules'])->name('listCapsules');
+    Route::get('/users', [AuthController::class, 'allUsers'])->name('allUsers');
     Route::get('capsules/{capsule_serial}', [CapsuleController::class, 'capsuleDetail'])->name('capsuleDetail');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 });

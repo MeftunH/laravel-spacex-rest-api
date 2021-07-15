@@ -11,6 +11,59 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+
+    /**
+     * @OA\Post(
+     ** path="/api/login",
+     *    tags={"auth"},
+     *   summary="Login",
+     *   operationId="/auth/login",
+     *
+     *   @OA\Parameter(
+     *      name="email",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="string"
+     *      )
+     *   ),
+     *   @OA\Parameter(
+     *      name="password",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *          type="string"
+     *      )
+     *   ),
+     *   @OA\Response(
+     *      response=200,
+     *       description="Success",
+     *      @OA\MediaType(
+     *           mediaType="application/json",
+     *      )
+     *   ),
+     *   @OA\Response(
+     *      response=401,
+     *       description="Unauthenticated"
+     *   ),
+     *   @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     *   @OA\Response(
+     *      response=404,
+     *      description="not found"
+     *   ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     *)
+     **/
+    /**
+     * login api
+     *
+     */
     public function login(Request $request)
     {
         $validator = $request->validate([
@@ -27,6 +80,126 @@ class AuthController extends Controller
             return response()->json(['success' => $success])->setStatusCode(200);
         }
     }
+    /**
+     * @OA\Get (
+     *     path="/api/users",
+     *      tags={"user"},
+     *     @OA\Response(response="200", description="Register a user.", @OA\JsonContent()),
+     *     security={
+     *          {
+     *              "bearerAuth": {},
+     *          }
+     *     }
+     * )
+     * @param Request $request
+     * @return mixed
+     */
+    public function allUsers()
+    {
+        $users = User::all();
+        return response()->json([
+            'status' => 'success',
+            'status_code' => 200,
+            'data' => [
+                'users' => json_encode($users)
+            ],
+
+            'message' => 'All users pulled out successfully'
+
+        ]);
+    }
+    /**
+     * @OA\Post (path="/api/logout",
+     *   tags={"auth"},
+     *   summary="Logs out current logged in user session",
+     *   description="",
+     *   operationId="logoutUser",
+     *   parameters={},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success with some route data"
+     *     ),
+     *   security={
+     *     {"bearerAuth": {}},
+     *   },
+     * )
+     */
+    public function logout()
+    {
+        auth()->user()->token()->revoke();
+        return response()->json([
+            'message'=> 'Successfully logged out'
+        ]);
+    }
+
+    /**
+     * @OA\Post(
+     ** path="/api/register",
+     *   tags={"auth"},
+     *   summary="Register",
+     *   operationId="register",
+     *
+     *  @OA\Parameter(
+     *      name="name",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="string"
+     *      )
+     *   ),
+     *  @OA\Parameter(
+     *      name="email",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="string"
+     *      )
+     *   ),
+     *   @OA\Parameter(
+     *      name="password",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="string"
+     *      )
+     *   ),
+     *      @OA\Parameter(
+     *      name="password_confirmation",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="string"
+     *      )
+     *   ),
+     *   @OA\Response(
+     *      response=201,
+     *       description="Success",
+     *      @OA\MediaType(
+     *           mediaType="application/json",
+     *      )
+     *   ),
+     *   @OA\Response(
+     *      response=401,
+     *       description="Unauthenticated"
+     *   ),
+     *   @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     *   @OA\Response(
+     *      response=404,
+     *      description="not found"
+     *   ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     *)
+     **/
+    /**
+     * Register api
+     *
+     */
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
