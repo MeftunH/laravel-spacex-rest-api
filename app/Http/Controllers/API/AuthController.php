@@ -4,6 +4,8 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Services\UserService;
+use Exception;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Hash;
@@ -11,6 +13,12 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+    protected $userService;
+
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
 
     /**
      * @OA\Post(
@@ -96,17 +104,18 @@ class AuthController extends Controller
      */
     public function allUsers()
     {
-        $users = User::all();
-        return response()->json([
-            'status' => 'success',
-            'status_code' => 200,
-            'data' => [
-                'users' => json_encode($users)
-            ],
+        $result = ['status' => 200];
 
-            'message' => 'All users pulled out successfully'
+        try {
+            $result['data'] = $this->userService->all();
+        } catch (Exception $e) {
+            $result = [
+                'status' => 500,
+                'error' => $e->getMessage()
+            ];
+        }
 
-        ]);
+        return response()->json($result, $result['status']);
     }
     /**
      * @OA\Post (path="/api/logout",
