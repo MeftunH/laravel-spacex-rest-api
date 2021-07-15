@@ -17,13 +17,14 @@ class EndPointTest extends TestCase
 
     public function test_list_capsules(): void
     {
+        $this->withoutMiddleware();
         $response = $this->json('get', '/api/capsules');
         $response->assertStatus(200);
     }
 
     public function test_filtered_capsules()
     {
-
+        $this->withoutMiddleware();
         $capsule = Capsule::with('missions')->inRandomOrder()->first();
         $response = $this->call('get', '/api/capsules',['status' => $capsule->status]);
         $response
@@ -34,6 +35,7 @@ class EndPointTest extends TestCase
     }
     public function test_capsule_detail()
     {
+        $this->withoutMiddleware();
         $capsule = Capsule::with('missions')->inRandomOrder()->first();
         $response = $this->call('get', '/api/capsules/',['capsule_serial' => $capsule->capsule_serial]);
         $response

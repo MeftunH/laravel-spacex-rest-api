@@ -7,6 +7,7 @@ namespace App\Repositories\Eloquent;
 use App\Http\Resources\UserCollection;
 use App\Models\User;
 use App\Repositories\UserRepositoryInterface;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Collection;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
@@ -21,5 +22,10 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     public function all(): UserCollection
     {
         return new UserCollection($this->user->all());
+    }
+
+    public function first(): UserCollection
+    {
+        return new UserCollection($this->user->first());
     }
 }
