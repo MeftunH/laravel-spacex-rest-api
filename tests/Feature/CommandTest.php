@@ -18,13 +18,14 @@ class CommandTest extends TestCase
     public function test_command()
     {
        $response = $this->artisan('sync:ToDatabase');
-       $status_code = 200;
-       if (empty(CapsuleRepository::count()))
+       $status_code = 0;
+       if (empty($this->count()))
        {
-           $status_code = 400;
+           $status_code = 1;
        }
 
-       $response->expectsOutput('Command Worked')->assertStatus($status_code);
+       $response->expectsOutput('Command Worked')->assertExitCode($status_code);
+
 
     }
 }
