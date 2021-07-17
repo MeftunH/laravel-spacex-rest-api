@@ -20,6 +20,7 @@ class EndPointTest extends TestCase
 
     protected $userService;
     protected $capsuleService;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -31,18 +32,54 @@ class EndPointTest extends TestCase
     {
         $this->withoutMiddleware();
         $response = $this->json('get', '/api/capsules');
-        $response->assertStatus(200);
+        $response->assertStatus(200)->assertJsonStructure(['status',
+            'data' => [
+                '*' => [
+                    'id',
+                    'capsule_serial',
+                    'capsule_id',
+                    'status',
+                    'original_launch',
+                    'original_launch_unix',
+                    'landings',
+                    'type',
+                    'details',
+                    'reuse_count',
+                    'created_at',
+                    'updated_at',
+                    'missions' => ['*'=>['id', 'name', 'flight', 'capsule_id', 'created_at', 'updated_at'],],
+                ],
+            ],
+        ]);
     }
 
     public function test_filtered_capsules()
     {
         $this->withoutMiddleware();
         $capsule = $this->capsuleService->getRandomCapsule();
-        $response = $this->call('get', '/api/capsules',['status' => $capsule->status]);
+        $response = $this->call('get', '/api/capsules', ['status' => $capsule->status]);
         $response
             ->assertStatus(200)
             ->assertJsonFragment([
                 'status' => $capsule->status,
+            ])->assertJsonStructure(['status',
+                'data' => [
+                    '*' => [
+                        'id',
+                        'capsule_serial',
+                        'capsule_id',
+                        'status',
+                        'original_launch',
+                        'original_launch_unix',
+                        'landings',
+                        'type',
+                        'details',
+                        'reuse_count',
+                        'created_at',
+                        'updated_at',
+                        'missions' => ['*'=>['id', 'name', 'flight', 'capsule_id', 'created_at', 'updated_at'],],
+                    ],
+                ],
             ]);
     }
 
@@ -50,12 +87,30 @@ class EndPointTest extends TestCase
     {
         $this->withoutMiddleware();
         $capsule = $this->capsuleService->getRandomCapsule();
-        $response = $this->call('get', '/api/capsules/',['capsule_serial' => $capsule->capsule_serial]);
+        $response = $this->call('get', '/api/capsules/', ['capsule_serial' => $capsule->capsule_serial]);
         $response
             ->assertStatus(200)
             ->assertJsonFragment([
                 'capsule_serial' => $capsule->capsule_serial,
-            ]);
+            ])->assertJsonStructure(['status',
+                'data' => [
+                    '*' => [
+                        'id',
+                        'capsule_serial',
+                        'capsule_id',
+                        'status',
+                        'original_launch',
+                        'original_launch_unix',
+                        'landings',
+                        'type',
+                        'details',
+                        'reuse_count',
+                        'created_at',
+                        'updated_at',
+                        'missions' => ['*'=>['id', 'name', 'flight', 'capsule_id', 'created_at', 'updated_at'],],
+                    ],
+                ],
+            ]);;
     }
 
     public function test_can_register()
