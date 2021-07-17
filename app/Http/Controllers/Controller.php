@@ -10,7 +10,7 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     /**
-     * @OA\Info(title="Space-X-Laravel Rest API", version="1.0.0")
+     * @OA\Info(title="Laravel-SpaceX-Rest API", version="1.0.0")
      */
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 }

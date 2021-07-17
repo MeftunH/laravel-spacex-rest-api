@@ -15,7 +15,7 @@ class CommandTest extends TestCase
      *
      * @return void
      */
-    public function test_command()
+    public function test_command(): void
     {
        $response = $this->artisan('sync:ToDatabase');
        $status_code = 0;

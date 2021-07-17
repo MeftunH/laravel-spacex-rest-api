@@ -20,6 +20,11 @@ class UserService
     {
         return $this->userRepository->all();
     }
+
+    public function getFirst()
+    {
+        return $this->userRepository->getFirst();
+    }
     public function saveUserData($data)
     {
         $validate = Validator::make($data,[

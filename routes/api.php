@@ -17,13 +17,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('register', [AuthController::class,'register']);
-Route::post('login', [AuthController::class,'login']);
+Route::post('login', [AuthController::class,'login'])->name('login');
 Route::group([
     'middleware' => ['auth:api']
 ], function () {
-    Route::get('capsules', [CapsuleController::class, 'listCapsules'])->name('listCapsules');
     Route::get('/users', [AuthController::class, 'allUsers'])->name('allUsers');
-    Route::get('capsules/{capsule_serial}', [CapsuleController::class, 'capsuleDetail'])->name('capsuleDetail');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    Route::prefix('capsules')->group(function () {
+        Route::get('/', [CapsuleController::class, 'listCapsules'])->name('listCapsules');
+        Route::get('/{capsule_serial}', [CapsuleController::class, 'capsuleDetail'])->name('capsuleDetail');
+    });
 
 });

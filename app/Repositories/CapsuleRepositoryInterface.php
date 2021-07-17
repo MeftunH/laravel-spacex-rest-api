@@ -10,4 +10,5 @@ interface CapsuleRepositoryInterface
     public function listAllCapsules();
     public function save($data);
     public function capsuleDetail($capsule_serial);
+    public function getRandomCapsule();
 }

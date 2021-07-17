@@ -20,6 +20,11 @@ class CapsuleService
     {
         return $this->capsuleRepository->capsuleDetail($capsule_serial);
     }
+
+    public function getRandomCapsule()
+    {
+        return $this->capsuleRepository->getRandomCapsule();
+    }
     public function saveCapsuleData($data)
     {
         $validate = Validator::make($data,[
