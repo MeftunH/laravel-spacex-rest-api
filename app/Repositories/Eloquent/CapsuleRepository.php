@@ -25,6 +25,10 @@ class CapsuleRepository extends BaseRepository implements CapsuleRepositoryInter
         parent::__construct($capsule);
     }
 
+    public function getRandomCapsule()
+    {
+        return Capsule::with('missions')->inRandomOrder()->first();
+    }
     public function count()
     {
         $all =  $this->capsule->get();

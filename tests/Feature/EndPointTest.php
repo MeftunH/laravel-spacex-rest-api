@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Capsule;
+use App\Services\CapsuleService;
 use App\Services\UserService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -18,10 +19,12 @@ class EndPointTest extends TestCase
 
 
     protected $userService;
+    protected $capsuleService;
     public function setUp(): void
     {
         parent::setUp();
         $this->userService = $this->app->make(UserService::class);
+        $this->capsuleService = $this->app->make(CapsuleService::class);
     }
 
     public function test_list_capsules(): void
@@ -34,7 +37,7 @@ class EndPointTest extends TestCase
     public function test_filtered_capsules()
     {
         $this->withoutMiddleware();
-        $capsule = Capsule::with('missions')->inRandomOrder()->first();
+        $capsule = $this->capsuleService->getRandomCapsule();
         $response = $this->call('get', '/api/capsules',['status' => $capsule->status]);
         $response
             ->assertStatus(200)
@@ -46,7 +49,7 @@ class EndPointTest extends TestCase
     public function test_capsule_detail()
     {
         $this->withoutMiddleware();
-        $capsule = Capsule::with('missions')->inRandomOrder()->first();
+        $capsule = $this->capsuleService->getRandomCapsule();
         $response = $this->call('get', '/api/capsules/',['capsule_serial' => $capsule->capsule_serial]);
         $response
             ->assertStatus(200)

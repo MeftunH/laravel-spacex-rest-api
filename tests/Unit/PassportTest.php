@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Models\Capsule;
 use App\Models\User;
+use App\Services\CapsuleService;
 use DateTime;
 use Illuminate\Support\Facades\DB;
 use Laravel\Passport\ClientRepository;
@@ -18,7 +19,12 @@ class PassportTest extends PassportTestCase
      * @return void
      */
     protected $scopes = ['restricted-scope'];
-
+    protected $capsuleService;
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->capsuleService = $this->app->make(CapsuleService::class);
+    }
     public function test_authenticated_user_can_user_list(): void
     {
         $response = $this->getJson('/api/users', $this->headers);
@@ -34,7 +40,7 @@ class PassportTest extends PassportTestCase
     public function test_authenticated_user_can_list_filtered_capsules(): void
     {
         $response = $this->getJson( '/api/capsules');
-        $capsule = Capsule::with('missions')->inRandomOrder()->first();
+        $capsule = $this->capsuleService->getRandomCapsule();
         $resp_status=200;
         if (isset($capsule)) {
             $response = $this->Json('get', '/api/capsules', ['status' => $capsule->status], $this->headers);
