@@ -20,7 +20,7 @@ class CreateCapsulesTable extends Migration
             $table->string('status',225);
             $table->string('original_launch')->nullable();
             $table->unsignedBigInteger('original_launch_unix')->nullable();
-            $table->boolean('landings');
+            $table->integer('landings');
             $table->string('type',255);
             $table->text('details')->nullable();
             $table->integer('reuse_count');
