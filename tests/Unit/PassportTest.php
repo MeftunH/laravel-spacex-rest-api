@@ -49,5 +49,15 @@ class PassportTest extends PassportTestCase
                 'status' => $capsule->status,
             ]);
     }
+    public function test_can_login(): void
+    {
 
+        $body = [
+            'email' => 'swagger@gmail.com',
+            'password' => 'swagger@gmail.com'
+        ];
+        $this->json('POST','/api/login',$body,['Accept' => 'application/json'])
+            ->assertStatus(200)
+            ->assertJsonStructure(['success'=>['token','user'=>['id','name','email','email_verified_at','created_at','updated_at']]]);
+    }
 }

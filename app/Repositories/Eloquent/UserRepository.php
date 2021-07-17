@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Repositories\UserRepositoryInterface;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Hash;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
@@ -27,5 +28,17 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     public function first(): UserCollection
     {
         return new UserCollection($this->user->first());
+    }
+
+
+    public function save($data)
+    {
+      $user = new $this->user;
+        $user->name = $data['name'];
+        $user->email = $data['email'];
+        $user->password = Hash::make($data['password']);
+        $user->save();
+        $user->createToken('authToken')->accessToken;
+        return $user->fresh();
     }
 }
