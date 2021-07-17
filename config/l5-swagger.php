@@ -87,7 +87,7 @@ return [
             /*
              * Edit to set path where swagger ui assets should be stored
             */
-            'swagger_ui_assets_path' => env('L5_SWAGGER_UI_ASSETS_PATH', 'vendor/swagger-api/swagger-ui/dist/'),
+            'swagger_ui_assets_path' => env('L5_SWAGGER_UI_ASSETS_PATH', 'public/docs/asset/dist/'),
 
             /*
              * Absolute path to directories that should be exclude from scanning
@@ -179,7 +179,7 @@ return [
          * Uncomment to add constants which can be used in annotations
          */
         // 'constants' => [
-        // 'L5_SWAGGER_CONST_HOST' => env('L5_SWAGGER_CONST_HOST', 'http://my-default-host.com'),
+         'L5_SWAGGER_CONST_HOST' => env('L5_SWAGGER_CONST_HOST', 'https://shrouded-lake-10232.herokuapp.com/'),
         // ],
     ],
 ];
