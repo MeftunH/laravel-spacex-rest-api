@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\CapsuleController;
+use App\Http\Controllers\API\CommandController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +23,8 @@ Route::group([
     'middleware' => ['auth:api']
 ], function () {
     Route::get('/users', [AuthController::class, 'allUsers'])->name('allUsers');
+    Route::get('/sync', [CommandController::class, 'sync'])->name('sync');
+
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::prefix('capsules')->group(function () {

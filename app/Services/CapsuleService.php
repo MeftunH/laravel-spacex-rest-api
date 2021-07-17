@@ -46,6 +46,10 @@ class CapsuleService
     {
         return $this->capsuleRepository->listAllCapsules();
     }
+    public function count()
+    {
+        return $this->capsuleRepository->count();
+    }
     public function getAll()
     {
         return $this->capsuleRepository->getAllCapsules();

@@ -224,6 +224,30 @@
                     }
                 ]
             }
+        },
+        "/api/sync": {
+            "get": {
+                "tags": [
+                    "command"
+                ],
+                "summary": "Sync To Database",
+                "operationId": "ec6a39976650a63e517391a9eb7fc71b",
+                "responses": {
+                    "200": {
+                        "description": "Sync To Database",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
