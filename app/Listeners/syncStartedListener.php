@@ -9,6 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use OpenApi\Annotations\Schema;
 
 class syncStartedListener
 {
@@ -30,10 +31,10 @@ class syncStartedListener
      */
     public function handle(syncStartedEvent $event)
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::getSchemaBuilder()->disableForeignKeyConstraints();
         Capsule::truncate();
         Mission::truncate();
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        DB::getSchemaBuilder()->enableForeignKeyConstraints();
         Log::info('Successfully Triggered');
     }
 }
