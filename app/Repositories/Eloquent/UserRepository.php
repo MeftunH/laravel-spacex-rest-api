@@ -25,9 +25,9 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         return new UserCollection($this->user->all());
     }
 
-    public function first(): UserCollection
+    public function getFirst()
     {
-        return new UserCollection($this->user->first());
+        return $this->user->first();
     }
 
 

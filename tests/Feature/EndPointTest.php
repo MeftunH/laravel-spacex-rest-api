@@ -28,10 +28,10 @@ class EndPointTest extends TestCase
         $this->capsuleService = $this->app->make(CapsuleService::class);
     }
 
-    public function test_list_capsules(): void
+    public function test_can_list_capsules(): void
     {
         $this->withoutMiddleware();
-        $response = $this->json('get', '/api/capsules');
+        $response = $this->json('get', route('listCapsules'));
         $response->assertStatus(200)->assertJsonStructure(['status',
             'data' => [
                 '*' => [
@@ -53,11 +53,11 @@ class EndPointTest extends TestCase
         ]);
     }
 
-    public function test_filtered_capsules()
+    public function test_can_filtered_capsules(): void
     {
         $this->withoutMiddleware();
         $capsule = $this->capsuleService->getRandomCapsule();
-        $response = $this->call('get', '/api/capsules', ['status' => $capsule->status]);
+        $response = $this->call('get',  route('listCapsules', ['status' => $capsule->status]));
         $response
             ->assertStatus(200)
             ->assertJsonFragment([
@@ -83,11 +83,11 @@ class EndPointTest extends TestCase
             ]);
     }
 
-    public function test_capsule_detail()
+    public function test_can_capsule_detail(): void
     {
         $this->withoutMiddleware();
         $capsule = $this->capsuleService->getRandomCapsule();
-        $response = $this->call('get', '/api/capsules/', ['capsule_serial' => $capsule->capsule_serial]);
+        $response = $this->call('get', route('capsuleDetail', ['capsule_serial' => $capsule->capsule_serial]));
         $response
             ->assertStatus(200)
             ->assertJsonFragment([
@@ -113,7 +113,7 @@ class EndPointTest extends TestCase
             ]);;
     }
 
-    public function test_can_register()
+    public function test_can_register(): void
     {
         $this->withoutMiddleware();
 
