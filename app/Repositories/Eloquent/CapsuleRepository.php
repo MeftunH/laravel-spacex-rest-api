@@ -25,6 +25,11 @@ class CapsuleRepository extends BaseRepository implements CapsuleRepositoryInter
         parent::__construct($capsule);
     }
 
+    public function count()
+    {
+        $all =  $this->capsule->get();
+        return $all->count();
+    }
     public function capsuleDetail($capsule_serial)
     {
         return $this->capsule->with('missions')->where('capsule_serial',$capsule_serial)->get();

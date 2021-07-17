@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Repositories\Eloquent\CapsuleRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Log;
@@ -16,7 +17,15 @@ class CommandTest extends TestCase
      */
     public function test_command()
     {
-        $this->artisan('sync:ToDatabase')->expectsOutput('Command Worked')
-            ->assertExitCode(0);
+       $response = $this->artisan('sync:ToDatabase');
+       $status_code = 0;
+       if (empty($this->count()))
+       {
+           $status_code = 1;
+       }
+
+       $response->expectsOutput('Command Worked')->assertExitCode($status_code);
+
+
     }
 }

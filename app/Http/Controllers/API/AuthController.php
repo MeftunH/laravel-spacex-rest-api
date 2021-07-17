@@ -211,21 +211,9 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 401);
-        }
-
         $input = $request->all();
-        $input['password'] = Hash::make($input['password']);
-        $user = User::create($input);
-        $success['token'] =  $user->createToken('authToken')->accessToken;
-        $success['name'] =  $user->name;
-        return response()->json(['success' => $success])->setStatusCode(200);
+        $user = $this->userService->saveUserData($input);
+        $success['name'] =  $request->name;
+        return response()->json(['success' => $success,'user'=>$user])->setStatusCode(200);
     }
 }
