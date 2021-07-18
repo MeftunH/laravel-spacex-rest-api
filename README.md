@@ -1,62 +1,73 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# LARAVEL SPACEX REST API :rocket:
+## Deployed by heroku on this [address](http://github.comhttps://shrouded-lake-10232.herokuapp.com/)
+* If you want to reach to swagger ui go to: https://shrouded-lake-10232.herokuapp.com/api/documentation
+- [x] a PHP artisan command to get all data from SpaceX API and sync them into the database for every 3 minutes.
+- ![Screenshot_5](https://user-images.githubusercontent.com/48466124/126051362-a7396066-64ec-470e-9924-4330343c2b78.png)
+- [x] an Event/Listener to fire it when the sync is started and completed.
+- [x] a log when the sync is complete
+-   ![Screenshot_4](https://user-images.githubusercontent.com/48466124/126051356-eefe2952-4579-4081-8bc1-75973cb30885.png)
+- [x] To list all capsules, an endpoint that name GET api/capsules
+- [x] To list all capsules by the status filter, an endpoint that name GET api/capsules?status=active|retired|unknown|etc  (with query parameters)
+- [x] To list capsule detail, an endpoint that name GET api/capsules/{capsule_serial}
+- [x] integration test to cover all endpoints
+-   ![Screenshot_6](https://user-images.githubusercontent.com/48466124/126051412-da2362bd-7663-45dc-a26b-4ec582158bb0.png)
+-   ![Screenshot_7](https://user-images.githubusercontent.com/48466124/126051426-0d8e1373-a42d-4731-96f0-ad1110439283.png)
+- [x] integration test to cover artisan command
+- [x] implement swagger for API documentation
+- [x] OAuth mechanism using the passport
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
+-**Endpoints For SPACEX API**
+Name | Link
+------------ | -------------
+Get All Capsules API | https://api.spacexdata.com/v3/capsules
+Get Capsules By Status API | https://api.spacexdata.com/v3/capsules?status=active
+Get Capsule By Serial API | https://api.spacexdata.com/v3/capsules/C112
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+-For more details please see [spacex docs:](https://docs.spacexdata.com/ )
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+-You can use Bearer JWT token for login.
 
-## Learning Laravel
+-**Endpoints For REST API**
+Name | Link
+------------ | -------------
+Get All Capsules API | {domain}/api/capsules
+Get Capsules By Status API | {domain}/api/capsules?status=active
+Get Capsule By Serial API | {domain}/api/capsules/C112
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## SET UP TO LOCALE
+```
+git clone https://github.com/MeftunH/laravel-spacex-rest-api.git
+```
+```
+cp .env.example .env
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```
+Set your database on .env file
+```
 
-## Laravel Sponsors
+```
+composer install
+```
+```
+php artisan migrate
+```
+```
+php artisan db:seed
+```
+```
+php artisan passport:install
+```
+```
+php artisan passport:keys
+```
+```
+php artisan serve
+```
+```
+php artisan l5-swagger:generate
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
 
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
