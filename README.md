@@ -1,6 +1,6 @@
 # LARAVEL SPACEX REST API :rocket:
 ## Deployed by heroku on this [address](http://github.comhttps://shrouded-lake-10232.herokuapp.com/)
-* If you want to reach to swagger ui go to: https://shrouded-lake-10232.herokuapp.com/api/documentation
+* If you want to reach swagger ui go to: https://shrouded-lake-10232.herokuapp.com/api/documentation
 - [x] a PHP artisan command to get all data from SpaceX API and sync them into the database for every 3 minutes.
 * php artisan sync:ToDatabase
 - ![Screenshot_5](https://user-images.githubusercontent.com/48466124/126051362-a7396066-64ec-470e-9924-4330343c2b78.png)
