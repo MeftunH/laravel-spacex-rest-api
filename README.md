@@ -1,5 +1,8 @@
 # LARAVEL SPACEX REST API :rocket:
 ## Deployed by heroku on this [address](http://github.comhttps://shrouded-lake-10232.herokuapp.com/)
+
+
+## Done List
 * If you want to reach swagger ui go to: https://shrouded-lake-10232.herokuapp.com/api/documentation
 - [x] a PHP artisan command to get all data from SpaceX API and sync them into the database for every 3 minutes.
 * php artisan sync:ToDatabase
@@ -17,7 +20,7 @@
 - [x] implement swagger for API documentation
 - [x] OAuth mechanism using the passport
 
-
+## About api routes
 -**Endpoints For SPACEX API**
 Name | Link
 ------------ | -------------
@@ -70,5 +73,8 @@ php artisan serve
 ```
 php artisan l5-swagger:generate
 ```
+```
+php artisan key:generate
 
+```
 
